@@ -1,0 +1,200 @@
+package com.longwang.controller.admin;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.longwang.entity.User;
+import com.longwang.service.UserService;
+import com.longwang.util.StringUtil;
+
+/**
+ * 用户控制器
+ * @author LongWang
+ *
+ */
+@RestController
+@RequestMapping("/admin/user")
+public class UserAdminController {
+
+  @Resource
+  private UserService userService;
+
+  @Value("${MD5Salt}")
+  private String salt; // md5加密盐
+
+  /**
+   * 根据ID查找用户
+   * @param userId
+   * @return
+   */
+  @RequestMapping("/findById")
+  public Map<String, Object> findById(Integer userId) {
+    Map<String, Object> resultMap = new HashMap<String, Object>();
+    User user = userService.findById(userId);
+    resultMap.put("errorNo", 0);
+    resultMap.put("data", user);
+    return resultMap;
+  }
+
+  /**
+   * 分页查询用户
+   * @param user
+   * @param registrationDates
+   * @param page
+   * @param limit
+   * @return
+   */
+  @RequestMapping("/list")
+  public Map<String, Object> list(User user,
+      @RequestParam(value = "latelyLoginTimes", required = false) String latelyLoginTimes,
+      @RequestParam(value = "page", required = false) Integer page,
+      @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+    String s_bregistrationDate = null; // 开始时间
+    String s_eregistrationDate = null; // 结束时间
+    if (StringUtil.isNotEmpty(latelyLoginTimes)) {
+      String[] strs = latelyLoginTimes.split(" - "); // 拆分时间段
+      s_bregistrationDate = strs[0];
+      s_eregistrationDate = strs[1];
+    }
+    List<User> userList = userService.list(user, s_bregistrationDate, s_eregistrationDate, page - 1, pageSize);
+    Long total = userService.getCount(user, s_bregistrationDate, s_eregistrationDate);
+    Map<String, Object> resultMap = new HashMap<String, Object>();
+    resultMap.put("errorNo", 0);
+    resultMap.put("data", userList);
+    resultMap.put("total", total);
+    return resultMap;
+  }
+
+  /**
+   * 取消关注
+   * @param request
+   * @param userId
+   * @return
+   */
+  @RequestMapping("/removeFocusUser")
+  public ModelAndView removeFocusUser(HttpServletRequest request, String userId) {
+    ModelAndView mav = new ModelAndView();
+    User user = (User) request.getSession().getAttribute("user");// 当前登录用户
+
+    String userIds = user.getUserIds();
+    List<String> tempList = Arrays.asList(userIds.split(","));
+    List<String> lineIdList = new ArrayList<>(tempList);
+    lineIdList.remove(userId);
+    String ret = StringUtils.join(lineIdList, ",");
+
+    user.setUserIds(ret);
+
+    userService.save(user);
+    mav.setViewName("redirect:/viewFocusUser");
+    return mav;
+  }
+
+  /**
+   * 关注用户
+   * @param request
+   * @param userId
+   * @return
+   */
+  @RequestMapping("/addFocusUser")
+  public ModelAndView addFocusUser(HttpServletRequest request, String userId) {
+    ModelAndView mav = new ModelAndView();
+    User user = (User) request.getSession().getAttribute("user");// 当前登录用户
+
+    String userIds = user.getUserIds();
+    List<String> tempList = Arrays.asList(userIds.split(","));
+    List<String> lineIdList = new ArrayList<>(tempList);
+    lineIdList.add(userId);
+    String ret = StringUtils.join(lineIdList, ",");
+
+    user.setUserIds(ret);
+
+    userService.save(user);
+    mav.setViewName("redirect:/viewFocusUser");
+    return mav;
+  }
+
+  @RequestMapping("/addFocusUser/{userId}")
+  public ModelAndView addFocusUser(@PathVariable(value = "userId", required = false) Integer userId,
+      HttpSession session) {
+    ModelAndView mav = new ModelAndView();
+    User user = (User) session.getAttribute("user");// 当前登录用户
+
+    String userIds = user.getUserIds();
+    List<String> tempList = new ArrayList<>();
+    if (userIds != null) {
+      tempList = Arrays.asList(userIds.split(","));
+    }
+    List<String> lineIdList = new ArrayList<>(tempList);
+    lineIdList.add(userId.toString());
+    String ret = StringUtils.join(lineIdList, ",");
+
+    user.setUserIds(ret);
+
+    userService.save(user);
+    mav.setViewName("redirect:/viewFocusUser");
+    return mav;
+  }
+
+  /**
+   * 取消收藏
+   * @param request
+   * @param userId
+   * @return
+   */
+  @RequestMapping("/removeCollection")
+  public ModelAndView removeCollection(HttpServletRequest request, String artId) {
+    ModelAndView mav = new ModelAndView();
+    User user = (User) request.getSession().getAttribute("user");// 当前登录用户
+
+    String artIds = user.getArticleIds();
+    List<String> tempList = Arrays.asList(artIds.split(","));
+    List<String> lineIdList = new ArrayList<>(tempList);
+    lineIdList.remove(artId);
+    String ret = StringUtils.join(lineIdList, ",");
+
+    user.setArticleIds(ret);
+
+    userService.save(user);
+    mav.setViewName("redirect:/viewCollection");
+    return mav;
+  }
+
+  /**
+   * 收藏
+   * @param request
+   * @param userId
+   * @return
+   */
+  @RequestMapping("/addCollection")
+  public ModelAndView addCollection(HttpServletRequest request, String artId) {
+    ModelAndView mav = new ModelAndView();
+    User user = (User) request.getSession().getAttribute("user");// 当前登录用户
+
+    String artIds = user.getArticleIds();
+    List<String> tempList = Arrays.asList(artIds.split(","));
+    List<String> lineIdList = new ArrayList<>(tempList);
+    lineIdList.add(artId);
+    String ret = StringUtils.join(lineIdList, ",");
+
+    user.setArticleIds(ret);
+
+    userService.save(user);
+    mav.setViewName("redirect:/viewCollection");
+    return mav;
+  }
+}

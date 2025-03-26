@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; Charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>生活方式分享平台-时光轴</title>
+    <meta name="keywords" content="生活方式分享平台"/>
+    <link rel="shortcut icon" href="/static/foreground/images/logo.png" type="image/x-icon" />
+    <!--Layui-->
+    <link href="/static/foreground/layui/css/layui.css" rel="stylesheet" />
+    <!--font-awesome-->
+    <link href="/static/foreground/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--全局样式表-->
+    <link href="/static/foreground/css/global.css" rel="stylesheet" />
+    <link href="/static/foreground/css/animate.min.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="/static/foreground/css/timeline.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/APlayer/APlayer.min.css">
+</head>
+<body>
+   <!-- 导航 -->
+    <div th:replace="common/head::#h"></div>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- 这个一般才是真正的主体内容 -->
+         <input type="hidden"  id="path" value="">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="/" title="网站首页">网站首页</a>
+                <a href="/foreground/timeline" title="点点滴滴">点点滴滴</a>
+                <a><cite>时光轴</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="child-nav shadow">
+                    <span class="child-nav-btn child-nav-btn-this">时光轴</span>
+                   <!--  <span class="child-nav-btn">笔记墙</span> -->
+                </div>
+                <div class="timeline-box shadow">
+                    <div class="timeline-main">
+                        <h1><i class="fa fa-clock-o"></i>时光轴<span> —— 记录生活点点滴滴</span></h1>
+                        <div class="timeline-line"></div>
+                        <h1 style="padding-top:4px;padding-bottom:2px;margin-top:40px;"><i class="fa fa-hourglass-end"></i>THE END</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- 底部 -->
+    <div th:replace="common/foot::#f"></div>
+    <!--侧边导航-->
+    <ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
+        <li class="layui-nav-item">
+            <a href="/foreground/index"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/article"><i class="fa fa-file-text fa-fw"></i>&nbsp;笔记专栏</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/mixed_pic"><i class="fa fa-tags fa-fw"></i>&nbsp;杂七杂八</a>
+        </li>
+        <li class="layui-nav-item layui-this">
+            <a href="/foreground/timeline"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+        </li>
+    </ul>
+    <!--分享窗体-->
+    <div class="blog-share layui-hide">
+        <div class="blog-share-body">
+            <div style="width: 200px;height:100%;">
+                <div class="bdsharebuttonbox">
+                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--遮罩-->
+    <div class="blog-mask animated layui-hide"></div>
+    <!--Aplayer音乐播放器  -->
+	<div id="aplayer"></div>
+	<!-- jquery -->
+	<script src="/static/foreground/js/jquery.min.js"></script>
+    <!-- layui.js -->
+    <script src="/static/foreground/layui/layui.js"></script>
+    <!-- 全局脚本 -->
+    <script src="/static/foreground/js/global.js"></script>
+    <script src="/static/foreground/js/canvas-particle.js"></script>
+    <!-- 本页脚本 -->
+    <script src="/static/foreground/js/timeline.js"></script>
+	<!-- APlayer音乐播放器 -->
+	<script src="/static/APlayer/APlayer.min.js"></script>
+	
+	<!-- 天气预报 -->
+	<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+	<script>tpwidget("init", {
+	    "flavor": "bubble",
+	    "location": "WSBQ3F31E8P0",
+	    "geolocation": "enabled",
+	    "position": "top-right",
+	    "margin": "68px 30px",
+	    "language": "zh-chs",
+	    "unit": "c",
+	    "theme": "chameleon",
+	    "uid": "U1B01FCCC9",
+	    "hash": "42ba05e92ec7ec1a1fe68b1e93b32f89"
+	});
+	tpwidget("show");</script>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			$(function(){
+				$.ajax({
+					url:"/foreground/musicList",
+					dataType:"json",
+					type:"post",
+					success:function(data){
+						if(data.success == 1){
+							//初始化播放器
+							const ap = new APlayer({
+							    container: document.getElementById('aplayer'),
+							    fixed: true,
+							    autoplay: true,
+							    audio: data.data
+							});
+						}else{
+							layer.msg("音乐加载失败！");
+						}
+					}
+				})
+		    }) ;
+		
+		/*]]>*/ 
+	</script>
+	<script type="text/javascript"> 
+	    $(document).ready(function() {
+	        $(".fa-hourglass-half").parent().parent().addClass("layui-this");
+	    });
+	</script> 
+</body>
+</html>

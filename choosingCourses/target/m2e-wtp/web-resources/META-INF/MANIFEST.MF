@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Administrator
+Build-Jdk: 15.0.1
+Implementation-Title: Blog
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.longwang
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/Blog
+Created-By: Maven Integration for Eclipse
+

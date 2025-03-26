@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; Charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-CN" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no" />
+<title>基于SpringBoot美食菜谱共享平台</title>
+<meta name="keywords" content="美食菜谱共享平台" />
+<meta name="baidu_union_verify"
+	content="6323e68566d3ece6ec4ec79996242a47" />
+<link rel="shortcut icon" href="/static/foreground/images/logo.png"
+	type="image/x-icon" />
+<!--Layui-->
+<link href="/static/foreground/layui/css/layui.css" rel="stylesheet" />
+<!--font-awesome-->
+<link href="/static/foreground/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet" />
+<!--全局样式表-->
+<link href="/static/foreground/css/global.css" rel="stylesheet" />
+<link href="/static/foreground/css/animate.min.css" rel="stylesheet" />
+<!-- 本页样式表 -->
+<link href="/static/foreground/css/index.css" rel="stylesheet" />
+<link href="/static/css/blog.css" rel="stylesheet" />
+<link rel="stylesheet" href="/static/APlayer/APlayer.min.css">
+<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/fsDict.js?v=1.5.0"></script>
+</head>
+<body>
+	<!-- 导航 -->
+	<div th:replace="common/head::#h"></div>
+	<!-- 用户登陆 -->
+	<div class="blog-user"></div>
+	<!-- 主体（一般只改变这里的内容） -->
+	<div class="blog-body">
+		<div class="layui-carousel blog-bg" id="carousel">
+			<div carousel-item="">
+				<div class="bg bg_a"   onclick="s(1)"></div>
+				<div class="bg bg_b" onclick="s(2)"></div>
+				<div class="bg bg_c" onclick="s(3)"></div>
+				<div class="bg bg_d" onclick="s(4)"></div>
+				<div class="bg bg_e" onclick="s(5)"></div>
+			</div>
+		</div>
+		<div class="blog-container">
+			<div class="blog-main">
+				<!-- 网站公告提示 -->
+				<div class="home-tips shadow">
+					<i style="float: left; line-height: 17px;" class="fa fa-volume-up"></i>
+					<div class="home-tips-container">
+						<span th:each="n : ${session.noticeList}" style="color: #009688"
+							th:utext="${n.content}"></span>
+					</div>
+				</div>
+				<!--左边笔记列表-->
+				<div class="blog-main-left animated slideInLeft">
+					<div class="flow-default" id="parentArticleList"></div>
+				</div>
+				
+	<!-- 底部 -->
+	<div th:replace="common/foot::#f"></div>
+	<!--侧边导航-->
+	<ul
+		class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide"
+		lay-filter="nav">
+		<li class="layui-nav-item layui-this"><a href="/"><i
+				class="fa fa-home fa-fw"></i>&nbsp;网站首页</a></li>
+		<li class="layui-nav-item"><a href="/foreground/article"><i
+				class="fa fa-file-text fa-fw"></i>&nbsp;美食菜谱专栏</a></li>
+		<li class="layui-nav-item"><a href="/foreground/mixed_pic"><i
+				class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a></li>
+		<li class="layui-nav-item"><a href="/foreground/timeline"><i
+				class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a></li>
+		
+	</ul>
+
+	<!--遮罩-->
+	<div class="blog-mask animated layui-hide"></div>
+	<!--Aplayer音乐播放器  -->
+	<!-- <div id="aplayer"></div> -->
+	<!-- jquery -->
+	<script src="/static/foreground/js/jquery.min.js"></script>
+	<!-- layui.js -->
+	<script src="/static/foreground/layui/layui.js"></script>
+	<!-- 全局脚本 -->
+	<script src="/static/foreground/js/global.js"></script>
+	<script src="/static/foreground/js/canvas-particle.js"></script>
+	<!-- 本页脚本 -->
+	<script src="/static/foreground/js/index.js"></script>
+	<script src="/static/js/blog.js"></script>
+	<!-- APlayer音乐播放器 -->
+	<script src="/static/APlayer/APlayer.min.js"></script>
+
+	<!-- 天气预报 -->
+	<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+	<script>tpwidget("init", {
+	    "flavor": "bubble",
+	    "location": "WSBQ3F31E8P0",
+	    "geolocation": "enabled",
+	    "position": "top-right",
+	    "margin": "68px 30px",
+	    "language": "zh-chs",
+	    "unit": "c",
+	    "theme": "chameleon",
+	    "uid": "U1B01FCCC9",
+	    "hash": "42ba05e92ec7ec1a1fe68b1e93b32f89"
+	});
+	tpwidget("show");</script>
+
+	
+
+	<!-- 默认选中网站首页 -->
+	<script type="text/javascript">
+		function  s(num) {
+		    if(num == 1){
+                window.location.href="http://localhost/foreground/detail/11";
+			}else  if(num == 2){
+                window.location.href="http://localhost/foreground/detail/13";
+			}else  if(num ==3){
+                window.location.href="http://localhost/foreground/detail/50";
+        	}else  if(num == 4){
+                window.location.href="http://localhost/foreground/detail/55";
+			}else{
+                window.location.href="http://localhost/foreground/detail/56";
+
+            }
+        }
+
+
+	    $(document).ready(function() {
+
+	    });
+	</script>
+
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		
+		layui.use('layer', function(){
+		  var layer = layui.layer;
+		  
+		  //mouseover（）鼠标悬停事件 //this当前DOM节点对象，即id为QQjl的DOM节点对象
+		  $("#QQjl").mouseover(function(){
+		  	layer.tips('QQ交流', this,{
+		  		tips: 1
+		  	});
+			});
+		  $("#gwxx").mouseover(function(){
+			  	layer.tips('给我写信', this,{
+			  		tips: 1
+			  	});
+				});
+		  $("#xlwb").mouseover(function(){
+			  	layer.tips('新浪微博', this,{
+			  		tips: 1
+			  	});
+				});
+		  $("#htgl").mouseover(function(){
+			  	layer.tips('后台管理', this,{
+			  		tips: 1
+			  	});
+				});
+		});              
+      
+		
+		function delHtmlTag(str){
+			return str.replace(/<[^>]+>/g,"");//去掉所有的html标记
+		}
+	
+		//新闻列表遍历
+		layui.use('flow', function(){
+			  var flow = layui.flow;
+			 
+			  flow.load({
+			    elem: '#parentArticleList' //流加载容器
+			    ,done: function(page, next){ //执行下一页的回调
+			    	setTimeout(function(){
+			    	$.post("/admin/article/list",{page:page,pageSize:5}, function(data) {
+			    		 	var lis = [];
+			    		 	console.log(data);
+			    		 	console.log(data.data.length);
+					        for(var i = 0; i < data.data.length; i++){
+					        	var content=delHtmlTag(data.data[i].content);//取出笔记内容（去掉html标签）
+					        	if(content.length>=80){
+					        		content=content.substring(0,86);
+					        	}
+					          lis.push("<div class=\"article shadow animated zoomIn\">\n" + 
+					  				"                		<div class=\"article-left \">\n" + 
+									"                			<img src=\"/static/images/"+data.data[i].imageName+"\" alt=\""+data.data[i].title+"\"/>\n" + 
+									"                		</div>\n" + 
+									"                		<div class=\"article-right\">\n" + 
+									"                        	<div class=\"article-title\">\n");
+					          if(data.data[i].isTop==1){
+					        	  lis.push("<span class=\"article_is_top\">置顶</span>&nbsp;");
+					          }
+					          if(data.data[i].isOriginal==1){
+					        	  lis.push("<span class=\"article_is_yc\">原创</span>&nbsp;");
+					          }else{
+					        	  lis.push("<span class=\"article_is_zz\">转载</span>&nbsp;");
+					          }
+					       lis.push("                        		<a href=\"/foreground/detail/"+data.data[i].articleId+"\">"+data.data[i].title+"</a>\n" + 
+									"                        	</div>\n" + 
+									"                        	<div class=\"article-abstract\">\n" + 
+									"                          	"+content+"</div>\n" + 
+									"                        </div>\n" + 
+									"                        <div class=\"clear\"></div>\n" + 
+									"                        <div class=\"article-footer\">\n" + 
+									"	                        <span><i class=\"fa fa-clock-o\"></i>&nbsp;&nbsp;"+data.data[i].publishDate+"</span>\n" + 
+									"	                        <span class=\"article-author\"><i class=\"fa fa-user\"></i>&nbsp;&nbsp; "+data.data[i].author+"</span>\n" + 
+									"	                        <span><i class=\"fa fa-tag\"></i>&nbsp;&nbsp;<a href=\"javascript:classifyList("+data.data[i].classify.classifyId+");\"> "+data.data[i].classify.classifyName+"</a></span>\n" + 
+									"	                        <span class=\"article-viewinfo\"><i class=\"fa fa-eye\"></i>&nbsp;"+data.data[i].click+"</span>\n" + 
+									"	                        <span class=\"article-viewinfo\"><i class=\"fa fa-commenting\"></i>&nbsp;"+data.data[i].commentNum+"</span>\n" + 
+									"                    	</div>\n" + 
+									"                	</div>");
+					        }
+			    		
+			        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+			        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+			        next(lis.join(''), page < data.totalPage);
+			    	});
+			    	});
+			    }
+			  });
+			  
+			});
+	/*]]>*/ 
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+.ht-box {
+    display: inline-block;
+    margin: 15px;
+    padding: 15px 0;
+    color: #fff;
+    width: 12%;
+}
+
+.ht-box p:first-child {
+    font-size: 40px;
+}
+
+/*原创认证*/
+.article_is_yc {
+    font-size: 12px;
+    display: inline-block;
+    line-height: 20px;
+    background: #FF0033;
+    border-radius: 2px;
+    color: #fff;
+    padding: 0px 5px;
+    position: inherit;
+}
+
+/*置顶认证*/
+.article_is_top {
+    font-size: 12px;/* 字体大小 */
+    display: inline-block;
+    line-height: 20px;/* 行高 */
+    background: #1E9FFF;
+    border-radius: 2px;/* 该属性允许您为元素添加圆角边框！ */
+    color: #fff;
+    padding: 0px 5px;
+    position: inherit;
+}
+
+/*转载认证*/
+.article_is_zz {
+ font-size: 12px;
+ display: inline-block;
+ line-height: 20px;
+ background: #FF9900;
+ border-radius: 2px;
+ color: #fff;
+ padding: 0px 5px;
+ position: inherit;
+}
+
+/*博主认证*/
+.is_bloger {
+ font-size: 12px;
+ display: inline-block;
+ line-height: 20px;
+ background: #1E9FFF;
+ border-radius: 2px;
+ color: #fff;
+ padding: 0px 5px;
+ position: inherit;
+}
+
+
+.long_wang {
+        text-align: center;
+        margin: 0 auto;
+        line-height: 64px;
+        font-size: 30px;
+        color: #000000;
+        font-weight: bold;
+        font-family: KaiTi;
+        display: inline-block;
+        z-index: 10;
+}

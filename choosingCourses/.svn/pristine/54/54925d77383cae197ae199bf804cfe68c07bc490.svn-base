@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content="text/html;charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv ="Pragma" content = "no-cache"/>
+	<meta http-equiv="Cache-Control" content="no cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="/static/fsLayui-1.8.2/plugins/layui/css/layui.css" media="all"/>
+	<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="/static/css/blog.css" rel="stylesheet" />
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/jquery/jquery.min.js"></script>
+	<link href="/static/fsLayui-1.8.2/plugins/contextMenu/jquery.contextMenu.min.css" rel="stylesheet" />
+	<script src="/static/fsLayui-1.8.2/plugins/contextMenu/jquery.contextMenu.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/fsLayui-1.8.2/css/fs.css?v=1.8.2" media="all"/>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/fsDict.js?v=1.8.2"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/fs.js?v=1.8.2"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/main.js?v=1.8.2"></script>
+</head>
+<body>
+  	 	 <!--主体内容-->
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show" style="text-align:center;">
+                        <p style="padding: 10px 15px; margin-bottom: 20px; margin-top: 10px; border:1px solid #ddd;display:inline-block;">
+                            上次登陆
+                            <span style="padding-left:1em;" th:text="IP：130.78.179.133"></span>
+                            <span style="padding-left:1em;">地点：湖南  湘潭</span>
+                            <span style="padding-left:1em;">时间：2019-5-13 15:45:23</span>
+                        </p>
+                        <fieldset class="layui-elem-field layui-field-title layui-content">
+                            <legend>统计信息</legend>
+                            <div class="layui-field-box">
+                                <div style="display: inline-block; width: 100%;">
+                                    <div class="ht-box layui-bg-blue">
+                                        <p th:text="10"></p>
+                                        <p>用户总数</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-red">
+                                        <p th:text="5"></p>
+                                        <p>今日注册</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-green">
+                                        <p th:text="3"></p>
+                                        <p>今日登陆</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-orange">
+                                        <p th:text="23"></p>
+                                        <p>笔记总数</p>
+                                    </div>
+                                    <div class="ht-box layui-bg-cyan">
+                                        <p th:text="6"></p>
+                                        <p>笔记分类</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+<meta charset="UTF-8"></meta>
+<div id="p" class="home-tips shadow">
+	<i style="float: left; line-height: 17px;" class="fa fa-volume-up"></i>
+	<div class="home-tips-container">
+		<span th:each="notification:${application.notificationList}" th:style="'color:' + @{(${notification.grade==0} ? 'red' : '#009688')} + ''" th:utext="${notification.notificationContent}"></span>
+	</div>
+</div>

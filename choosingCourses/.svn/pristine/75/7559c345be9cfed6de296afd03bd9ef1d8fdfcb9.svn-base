@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; Charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Long博客-关于本站</title>
+    <meta name="keywords" content="longwang,龙旺博客,java学习"/>
+    <link rel="shortcut icon" href="/static/foreground/images/logo.png" type="image/x-icon" />
+    <!--Layui-->
+    <link href="/static/foreground/layui/css/layui.css" rel="stylesheet" />
+    <!--font-awesome-->
+    <link href="/static/foreground/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--全局样式表-->
+    <link href="/static/foreground/css/global.css" rel="stylesheet" />
+    <link href="/static/foreground/css/animate.min.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="/static/foreground/css/about.css" rel="stylesheet" />
+    <link href="/static/css/blog.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/APlayer/APlayer.min.css">
+</head>
+<body>
+    <!-- 导航 -->
+    <div th:replace="common/head::#h"></div>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- 这个一般才是真正的主体内容 -->
+        <div class="blog-container">
+        	<blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="/" title="网站首页">网站首页</a>
+                <a><cite>关于本站</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="layui-tab layui-tab-brief shadow" lay-filter="tabAbout">
+                    <ul class="layui-tab-title">
+                        <li lay-id="1" class="layui-this">关于博客</li>
+                        <li lay-id="2">关于作者</li>
+                        <li lay-id="3" id="frinedlink">友情链接</li>
+                        <li lay-id="4">留言墙</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                    	<div class="layui-tab-item layui-show">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                	<img alt="博客Log" src="/static/images/20180516160352.jpg" />
+                                    <div><a class="long_wang animated fadeInLeftBig" href="/">LongWang</a></div>
+                                </div>
+                                <p class="aboutinfo-introduce animated fadeInRightBig">一个java程序员的个人博客，记录博主的学习,生活中的一些有趣的事，并分享Java方面技术和源码。</p>
+                                <p class="aboutinfo-location animated fadeInLeftBig"><i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank" href="http://www.long225.cn">www.long225.cn</a></p>
+                                <hr />
+                                <div class="aboutinfo-contact animated fadeInRightBig">
+                                    <a title="网站首页" href="/"><i class="fa fa-home fa-2x" style="font-size:2.5em;position:relative;top:3px"></i></a>
+                                    <a title="笔记专栏" href="/foreground/article"><i class="fa fa-file-text fa-2x"></i></a>
+                                    <a title="杂七杂八" href="/foreground/mixed_pic"><i class="fa fa-paper-plane-o fa-2x"></i></a>
+                                    <a title="点点滴滴" href="/foreground/timeline"><i class="fa fa-hourglass-half fa-2x"></i></a>
+                                </div>
+
+                                <fieldset class="layui-elem-field layui-field-title animated fadeInLeftBig">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract">
+                                        <p style="text-align:center;">博客是一个由JAVA开发的个人博客网站，诞生于2018年1月2日，前端页面使用“Absolutely”大神提供的前端模板页面，以及大量的LayerUI组件，网站架构使用springboot+spring date jpa+shiro+Tomcat架构 ，后台部分页面的布局使用fsLayui框架模板。目前大体的主要功能已经完成，后续将会继续完善功能和页面的优化！</p>
+                                        <h1 style="text-align:center;">The End</h1>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--关于网站End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                     <img th:src="'/static/images/'+${application.blogger.headPortrait}" alt="蓝色牛仔裤"/>
+                                </div>
+                                <p class="aboutinfo-nickname" th:text="${application.blogger.nickName}">LongWang</p>
+                                <p class="aboutinfo-introduce animated fadeInLeftBig">一枚90后程序员，Java开发工程师，主攻后端，略懂Web前端</p>
+                                <p class="aboutinfo-location animated fadeInLeftBig"><i class="fa fa-location-arrow"></i>&nbsp;<span th:text="${application.blogger.site}">中国 - 湘潭</span></p>
+                                <hr />
+                                <div class="aboutinfo-contact animated bounceIn">
+                                    <a target="_blank" title="QQ交流" href="http://shang.qq.com/email/stop/email_stop.html?qq=2896543728"><i class="fa fa-qq fa-2x"></i></a>
+                                    <a target="_blank" title="给我写信" href="mailto:2896543728@qq.com"><i class="fa fa-envelope fa-2x"></i></a>
+                                    <a target="_blank" title="新浪微博" href="https://weibo.com/p/1005055534423586"><i class="fa fa-weibo fa-2x"></i></a>
+                                    <a target="_blank" title="后台管理" href="/login"><i class="fa fa-database fa-2x"></i></a>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title animated bounceInUp">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract abstract-bloger">
+                                        <p style="text-align:center;">诞生于1997年，目前是一个码农，从事Java方向的研究和开发。</p>
+                                        <h1>个人信息</h1>
+                                        <p>一个喜欢旅游，喜欢在路上的感觉！喜欢民谣音乐的程序猿~(偶尔会跟大家分享一些好听的民谣音乐，在本站我也会推荐，喜欢的可以关注我的网易云，收藏我自己整理的歌单：蓝色牛仔裤丶)</p>
+                                        <h1>个人介绍</h1>
+                                        <p>暂无</p>
+                                        <h1>未来</h1>
+                                        <p>还没想好...</p>
+                                        <h1 style="text-align:center;">The End</h1>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--关于作者End-->
+                    	<div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/static/foreground/images/handshake.png" alt="友情链接" />
+                                </div>
+                                <p class="aboutinfo-nickname">友情链接</p>
+                                <p class="aboutinfo-introduce">Name：Long博客&nbsp;&nbsp;&nbsp;&nbsp;Site：www.long225.cn</p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-close"></i>经常宕机&nbsp;
+                                    <i class="fa fa-close"></i>不合法规&nbsp;
+                                    <i class="fa fa-close"></i>插边球站&nbsp;
+                                    <i class="fa fa-close"></i>红标报毒&nbsp;
+                                    <i class="fa fa-check"></i>原创优先&nbsp;
+                                    <i class="fa fa-check"></i>技术优先
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">互换友链，携手并进！</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title animated fadeInRightBig">
+                                    <legend>Friend Link</legend>
+                                    <div class="layui-field-box">
+                                        <ul class="friendlink">
+                                            <li>
+                                                <a target="_blank" href="http://www.layui.com/" title="Layui" class="friendlink-item">
+                                                    <p class="friendlink-item-pic"><img src="http://www.layui.com/favicon.ico" alt="Layui" /></p>
+                                                    <p class="friendlink-item-title">Layui</p>
+                                                    <p class="friendlink-item-domain">layui.com</p>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a target="_blank" href="http://zuoqy.cn/" title="zuoqy" class="friendlink-item">
+                                                    <p class="friendlink-item-pic"><img src="/static/images/zuoqy.png" alt="zuoqy" /></p>
+                                                    <p class="friendlink-item-title">zuoqy</p>
+                                                    <p class="friendlink-item-domain">zuoqy.cn</p>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--友情链接End-->
+                    	<div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="/static/foreground/images/messagewall.png" alt="留言墙" />
+                                </div>
+                                <p class="aboutinfo-nickname">留言墙</p>
+                                <p class="aboutinfo-introduce">本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！</p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">沟通交流，拉近你我！</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>Leave a message</legend>
+                                    <div class="layui-field-box">
+                                        <div class="leavemessage" style="text-align:initial">
+                                            <form class="layui-form">
+                                            <input type="hidden" id="user" name="user" lay-verify="userId" th:value="${session.currentUser}? ${session.currentUser.userId}:''" />
+                                                <div class="layui-form-item">
+                                                    <textarea name="content" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                                                </div>
+                                            </form>
+                                            <ul class="blog-comment" style="text-align:left;" id="messageList"></ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--留言墙End-->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <div th:replace="common/foot::#f"></div>
+    <!--侧边导航-->
+    <ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
+        <li class="layui-nav-item">
+            <a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/article"><i class="fa fa-file-text fa-fw"></i>&nbsp;笔记专栏</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/mixed_pic"><i class="fa fa-tags fa-fw"></i>&nbsp;杂七杂八</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/timeline"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+        </li>
+    </ul>
+    <!--分享窗体-->
+    <div class="blog-share layui-hide">
+        <div class="blog-share-body">
+            <div style="width: 200px;height:100%;">
+                <div class="bdsharebuttonbox">
+                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--遮罩-->
+    <div class="blog-mask animated layui-hide"></div>
+    <!--Aplayer音乐播放器  -->
+	<div id="aplayer"></div>
+    <!-- jquery -->
+    <script src="/static/foreground/js/jquery.min.js"></script>
+    <!-- layui.js -->
+    <script src="/static/foreground/layui/layui.js"></script>
+	<script src="/static/APlayer/APlayer.min.js"></script>
+    <!-- 全局脚本 -->
+    <script src="/static/foreground/js/global.js"></script>
+    <script src="/static/foreground/js/canvas-particle.js"></script>
+    <!-- 本页脚本 -->
+    <script src="/static/foreground/js/about.js"></script>
+	<script src="/static/js/blog.js"></script>
+    <!-- 评论留言 -->
+    <script src="/static/foreground/js/about.js"></script>
+	<!-- APlayer音乐播放器 -->
+	<script src="/static/APlayer/APlayer.min.js"></script>
+	
+	<!-- 天气预报 -->
+	<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+	<script>tpwidget("init", {
+	    "flavor": "bubble",
+	    "location": "WSBQ3F31E8P0",
+	    "geolocation": "enabled",
+	    "position": "top-right",
+	    "margin": "68px 30px",
+	    "language": "zh-chs",
+	    "unit": "c",
+	    "theme": "chameleon",
+	    "uid": "U1B01FCCC9",
+	    "hash": "42ba05e92ec7ec1a1fe68b1e93b32f89"
+	});
+	tpwidget("show");</script>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			$(function(){
+				$.ajax({
+					url:"/foreground/musicList",
+					dataType:"json",
+					type:"post",
+					success:function(data){
+						if(data.success == 1){
+							//初始化播放器
+							const ap = new APlayer({
+							    container: document.getElementById('aplayer'),
+							    fixed: true,
+							    autoplay: true,
+							    audio: data.data
+							});
+						}else{
+							layer.msg("音乐加载失败！");
+						}
+					}
+				})
+		    }) ;
+		
+		/*]]>*/ 
+	</script>
+	 
+	<script type="text/javascript"> 
+	    $(document).ready(function() {
+	        $(".fa-info").parent().parent().addClass("layui-this");
+	    });
+	</script> 
+	
+    <script th:inline="javascript">
+	/*<![CDATA[*/ 
+		
+		layui.use('flow', function(){
+			  var flow = layui.flow;
+			  
+			  //评论显示
+			  flow.load({
+				    elem: '#messageList' //流加载容器
+				    ,done: function(page, next){ //执行下一页的回调
+				    	setTimeout(function(){
+				    	$.post("/comment/massageList",{page:page,pageSize:5}, function(data) {
+				    		var lis = [];
+					        for(var i = 0; i < data.data.length; i++){
+				    			var str="";
+					        	 var datas = {
+					                    comment:data.data[i].commentId
+					                };
+					        	$.ajax({  
+					                type : "post",  
+					                 url : "/reply/list",  
+					                 data : datas,
+					                 async : false,  
+					                 success : function(data2){ 
+					                	 for(var r = 0; r < data2.data.length; r++){
+						                	 str+="<div class=\"comment-child\">\n" + 
+							     				"      <img src=\""+data2.data[r].user.headPortrait+"\" alt=\""+data2.data[r].user.nickname+"\" />\n" + 
+							    				"      <div class=\"info\">\n" + 
+							    				"          <span class=\"username\">	"+data2.data[r].user.nickname+" : </span>";
+							    				if(data2.data[r].user.userId=='1'){
+							    					str+="<span class=\"is_bloger\">博主</span>&nbsp;";
+										          }
+							    		   str+="回复 <span class=\"username\">@"+data.data[i].user.nickname+"：</span>"+
+							    			    "<span>"+data2.data[r].content+"</span>\n" + 
+							    				"      </div>\n" + 
+							    				"      <p class=\"info\"><span class=\"time\">"+data2.data[r].replyDate+"</span></p>\n" + 
+							    				"  </div>\n";
+					                	 }
+					                 }  
+					            }); 
+					        	lis.push( "<li>\n" + 
+										"               <div class=\"comment-parent\">\n" + 
+										"                   <img src=\""+data.data[i].user.headPortrait+"\" alt=\""+data.data[i].user.nickname+"\" />\n" + 
+										"                   <div class=\"info\">\n" + 
+										"                       <span class=\"username\">"+data.data[i].user.nickname+"</span>\n"); 
+						        	if(data.data[i].user.userId=='1'){
+						        		lis.push("<span class=\"is_bloger\">博主</span>&nbsp;");
+							          }
+							   lis.push("                   </div>\n" + 
+										"                   <div class=\"content\">\n" + 
+										"                       "+data.data[i].content+"\n" + 
+										"                   </div>\n" + 
+										"                   <p class=\"info info-footer\"><span class=\"time\">"+data.data[i].commentDate+"</span> <a class=\"btn-reply\" style=\"color: #009688;font-size:14px;\" href=\"javascript:;\" onclick=\"btnReplyClick(this)\">回复</a></p>\n" + 
+										"               </div>\n" + 
+										"               <hr />\n" + str +
+										"               <!-- 回复表单默认隐藏 -->\n" + 
+										"               <div class=\"replycontainer layui-hide\">\n" + 
+										"                   <form class=\"layui-form\" action=\"/reply/list/\">\n" + 
+										"                   <input type=\"hidden\" id=\"comment\" name=\"comment\" value=\""+data.data[i].commentId+"\" />\n" +
+										"                   <input type=\"hidden\" id=\"user\" lay-verify=\"userId\" name=\"user\" value=\""+$('#user').val()+"\" />\n" +
+										"                       <div class=\"layui-form-item\">\n" + 
+										"                           <textarea name=\"content\" lay-verify=\"replyContent\" placeholder=\"回复  @"+data.data[i].user.nickname+":\" class=\"layui-textarea\" style=\"min-height:80px;\"></textarea>\n" + 
+										"                       </div>\n" + 
+										"                       <div class=\"layui-form-item\">\n" + 
+										"                           <button class=\"layui-btn layui-btn-mini\" lay-submit=\"formReply\" lay-filter=\"formReply\">提交</button>\n" + 
+										"                       </div>\n" + 
+										"                   </form>\n" + 
+										"               </div>\n" + 
+										"           </li>");
+					        }
+			    		
+			        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+			        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+			        next(lis.join(''), page < data.totalPage);
+			    	});
+			    	}, 500);
+			    }
+			  });
+			  
+			});
+	/*]]>*/ 
+</script>
+    
+</body>
+</html>

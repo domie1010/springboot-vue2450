@@ -1,0 +1,29 @@
+server: 
+  port: 80
+  servlet:
+    context-path: /
+  
+spring: 
+  datasource: 
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/choosing_courses?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+  thymeleaf:
+    cache: false
+
+thymeleaf:
+    prefix: classpath:/templates/
+
+MD5Salt: longwang
+
+imageFilePath: C:\\Users\\Administrator\\Desktop\\bishe\lifeShare\\src\\main\\webapp\\static\\images\\
+downloadImagePath:  C:\\Users\\Administrator\\Desktop\\bishe\lifeShare\\src\\main\\webapp
+lucenePath: C:\\Users\\Administrator\\Desktop\\bishe\lifeShare\\lucene
+
+

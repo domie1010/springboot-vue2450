@@ -1,0 +1,39 @@
+<meta charset="UTF-8"></meta>
+<nav id="h" class="blog-nav layui-header">
+        <div class="blog-container">
+            <!-- QQ互联登陆 -->
+            <a href="/QQ/qqLogin" th:if="${session.currentUser}==null" class="blog-user">
+                <i class="fa fa-qq"></i>
+            </a>
+            <a href="/QQ/loginOut" th:if="${session.currentUser}!=null" class="blog-user">
+                <img id="loginOut" th:src="${session.currentUser.headPortrait}" th:alt="${session.currentUser.nickname}" />
+            </a>
+            <!-- Long -->
+            <a class="blog-logo" href="/">生活方式分享平台</a>
+            <!-- 导航菜单 -->
+            <ul class="layui-nav" lay-filter="nav">
+				    <li class="layui-nav-item">
+				        <a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+				    </li>
+				    <li class="layui-nav-item">
+				        <a href="/foreground/article"><i class="fa fa-file-text fa-fw"></i>&nbsp;笔记专栏</a>
+				    </li>
+				    <li class="layui-nav-item">
+				        <a href="/login"><i class="fa fa-file-text fa-fw"></i>&nbsp;登录</a>
+				    </li>
+				    <!-- <li class="layui-nav-item">
+				        <a href="/foreground/mixed_pic"><i class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a>
+				    </li>
+				    <li class="layui-nav-item">
+				        <a href="/foreground/timeline"><i class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a>
+				    </li> -->
+				    <!-- <li class="layui-nav-item">
+				        <a href="/foreground/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+				    </li> -->
+				</ul>
+            <!-- 手机和平板的导航开关 -->
+            <a class="blog-navicon" href="javascript:;">
+                <i class="fa fa-navicon"></i>
+            </a>
+        </div>
+</nav>

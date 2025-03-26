@@ -1,0 +1,99 @@
+package com.longwang.service;
+
+import java.util.List;
+
+import org.springframework.data.repository.query.Param;
+
+import com.longwang.entity.User;
+
+/**
+ * 用户Service接口
+ * @author LongWang
+ *
+ */
+public interface UserService {
+
+  /**
+   * 根据open_id查找用户
+   * @param openId
+   * @return
+   */
+  public User findByOpenId(String openId);
+
+  /**
+   * 分页查询用户
+   * @param user
+   * @param s_bregistrationDate
+   * @param s_eregistrationDate
+   * @param page
+   * @param pageSize
+   * @return
+   */
+  public List<User> list(User user, String s_bregistrationDate, String s_eregistrationDate, Integer page,
+      Integer pageSize);
+
+  /**
+   * 获取总记录数
+   * @param user
+   * @param s_bregistrationDate
+   * @param s_eregistrationDate
+   * @return
+   */
+  public Long getCount(User user, String s_bregistrationDate, String s_eregistrationDate);
+
+  /**
+   * 根据ID查找实体
+   * @param id
+   * @return
+   */
+  public User findById(Integer id);
+
+  /**
+   * 删除用户
+   * @param id
+   */
+  public void delete(Integer id);
+
+  /**
+   * 修改或添加用户
+  * @Title: save 
+  *  @param user  用户实体
+  * @return void    返回类型 
+  * @throws
+   */
+  public void save(User user);
+
+  /**
+   * 根据真实姓名模糊查询用户ID
+   * @param trueName
+   * @return
+   */
+  public Integer getUserIdByTrueName(@Param("nickname") String nickname);
+
+  public User findByUsernameAndPassword(String username, String password);
+
+  /**
+   * 获取今天注册用户总数
+   * @param user
+   * @param s_bregistrationDate
+   * @param s_eregistrationDate
+   * @return
+   */
+  Long getTodayRegistCount(User user, String s_bregistrationDate, String s_eregistrationDate);
+
+  /**
+   * 获取用户总数
+   * @return
+   */
+  public Long getCount();
+
+  /**
+   * 查询关注用户
+   * @param retIds
+   * @return
+   */
+  public List<User> findByListId(List<Integer> retIds);
+
+  public User findByTrueName(String nickname);
+
+}

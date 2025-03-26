@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.longwang.BlogApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.863 s - in com.longwang.BlogApplicationTests

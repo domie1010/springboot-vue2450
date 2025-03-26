@@ -1,0 +1,18 @@
+package com.longwang.service;
+
+import com.longwang.entity.Admin;
+
+/**
+ * 管理员service接口
+ * @author LongWang
+ *
+ */
+public interface AdminService {
+
+	/**
+	 * 根据用户名查找用户实体
+	 * @param userName
+	 * @return
+	 */
+	public Admin findByUserName(String userName);
+}

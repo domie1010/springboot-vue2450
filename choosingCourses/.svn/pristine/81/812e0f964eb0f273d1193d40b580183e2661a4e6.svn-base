@@ -1,0 +1,61 @@
+package com.longwang.controller.admin;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.longwang.entity.Admin;
+import com.longwang.service.AdminService;
+import com.longwang.util.CryptographyUtil;
+
+/**
+ * 管理员控制器
+ * @author LongWang
+ *
+ */
+@RestController
+@RequestMapping("/admin")
+public class AdminController {
+	
+	@Value("${MD5Salt}")
+	private String salt;  //md5加密盐
+	
+	@Resource
+	private AdminService adminService;
+
+	/**
+	 * 后台管理员登录验证
+	 * @param admin
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public ModelAndView login(Admin admin,HttpServletRequest request){
+		ModelAndView mav=new ModelAndView();
+		HttpSession session=request.getSession();
+		Subject subject=SecurityUtils.getSubject();
+		UsernamePasswordToken token=new UsernamePasswordToken(admin.getUserName(), CryptographyUtil.md5(admin.getPassword(), salt));
+		try{
+			subject.login(token);
+			String userName=(String) SecurityUtils.getSubject().getPrincipal();
+			Admin resultUser=adminService.findByUserName(userName);
+			session.setAttribute("adminUser", resultUser);
+			mav.addObject("success", true);
+			mav.setViewName("/admin/index");
+		}catch(Exception e){  //用户名密码错误
+			e.printStackTrace();
+			mav.addObject("admin", admin);
+	        mav.addObject("errorInfo", "用户名或者密码错误!");
+	        mav.setViewName("/login");
+		}
+		return mav;
+	}
+}

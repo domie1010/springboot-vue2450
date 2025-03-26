@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; Charset=utf-8" />
+    <meta http-equiv="Content-Language" content="zh-CN" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title th:text="${article.title}+'_生活方式分享平台笔记专栏'"></title>
+    <meta name="keywords" content="生活方式分享平台"/>
+    <link rel="shortcut icon" href="/static/foreground/images/logo.png" type="image/x-icon" />
+    <!--Layui-->
+    <link href="/static/foreground/layui/css/layui.css" rel="stylesheet" />
+    <!--font-awesome-->
+    <link href="/static/foreground/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <!--全局样式表-->
+    <link href="/static/foreground/css/global.css" rel="stylesheet" />
+    <link href="/static/foreground/css/animate.min.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="/static/foreground/css/detail.css" rel="stylesheet" />
+    <link href="/static/css/blog.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/APlayer/APlayer.min.css">
+    <!-- jquery -->
+	<script src="/static/foreground/js/jquery.min.js"></script>
+    
+	<!--开头这里的样式为默认的风格，可以根据自己的喜好更换风格-->
+	<!--我的高亮效果是zenburn-->
+	<link rel="stylesheet" href="/static/js/highlight/styles/default.css">
+	<script src="/static/js/highlight/highlight.pack.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	
+	<link href="/static/js/magnify-master/dist/jquery.magnify.min.css" rel="stylesheet">
+	<script src="/static/js/magnify-master/dist/jquery.magnify.min.js"></script>
+    
+</head>
+<body>
+	<!-- 导航 -->
+    <div th:replace="common/head::#h"></div>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- 这个一般才是真正的主体内容 -->
+        <div class="blog-container">
+            <div class="blog-main">
+                <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                	<a href="/" title="网站首页">网站首页</a>
+                	<a href="/foreground/article" title="笔记专栏">笔记专栏</a>
+                	<a><cite class="title" th:text="${article.title}"></cite></a>
+           		</blockquote>
+           		<div class="blog-main">
+                <!--左边笔记列表-->
+                <div id="parentArticleList" class="blog-main-left animated slideInLeft">
+                	<!-- 笔记内容（使用Kingeditor富文本编辑器发表的） -->
+                    <div class="article-detail shadow">
+                        <div class="article-detail-title title" th:text="${article.title}"></div>
+                        <div class="article-detail-info">
+                        	<span th:text="'编辑时间：'+${article.publishDate}"></span>
+                            <a th:href="@{'/foreground/otherPerson/'+${article.userId}}" target="_blank"><span th:text="'作者：'+${article.author}"></span></a>
+                            <span th:text="'浏览量：'+${article.click}"></span>
+                            
+                        </div>
+                        <form id="ajax-contact-form" class="form-horizontal" action="/admin/user/removeCollection" method="post">
+                                    <div class="actions" style="text-align:right">
+                                      <input type="hidden" name="artId" th:value="${article.articleId}"/>
+                                      <button type="submit" class="btn-default btn-cf-submit" th:if="${flag==true}">取消收藏</button>
+                                    </div>
+                                </form>
+                                <form id="ajax-contact-form" class="form-horizontal" action="/admin/user/addCollection" method="post">
+                                    <div class="actions" style="text-align:right">
+                                      <input type="hidden" name="artId" th:value="${article.articleId}"/>
+                                      <button type="submit" class="btn-default btn-cf-submit" th:if="${flag==false}">收藏</button>
+                                    </div>
+                                </form>
+                        <div id="articleContent" style="overflow: hidden;" class="article-detail-content" th:utext="${article.content}">
+                    	</div>
+                    </div>
+               		<!-- 评论区域 -->
+                    <div class="blog-module shadow" style="box-shadow: 0 1px 8px #a6a6a6;">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-bottom:0">
+                            <legend>来说两句吧</legend>
+                            <div class="layui-field-box">
+                                <form class="layui-form blog-editor" action="">
+                                <input type="hidden" id="user" name="user" lay-verify="userId" th:value="${session.user}? ${session.user.userId}:''" />
+								<input type="hidden" id="article" name="article" th:value="${article.articleId}" />
+                                    <div class="layui-form-item">
+                                        <textarea name="content" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交评论</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </fieldset>
+                        <div class="blog-module-title">最新评论</div>
+                        <ul class="blog-comment" id="commentList"></ul>
+                    </div>
+
+                </div>
+                <!--右边小栏目-->
+                <div class="blog-main-right">
+                	<!--右边悬浮 平板或手机设备显示-->
+                    <div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
+                	<!-- 分类导航 -->
+                	<div class="article-category shadow">
+                        <div class="article-category-title">分类导航</div>
+                        	<a th:each="classify:${application.classifyList}" th:href="'javascript:classifyList('+${classify.classifyId}+');'" th:text="${classify.classifyName}"></a>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">相似笔记</div>
+                        <ul class="blog-module-ul">
+                            <li th:each="s,iterStat : ${session.similarityList}">
+                            	<span th:switch="${iterStat.count}">
+                            	<i th:case="'1'" class="layui-badge-rim layui-bg-red" th:text="${iterStat.count}"></i>
+                            	<i th:case="'2'" class="layui-badge-rim layui-bg-orange" th:text="${iterStat.count}"></i>
+                            	<i th:case="'3'" class="layui-badge-rim layui-bg-green" th:text="${iterStat.count}"></i>
+                            	<i th:case="*" class="layui-badge-rim" th:text="${iterStat.count}"></i>
+								</span>
+                            	&nbsp;&nbsp;<a th:href="'/foreground/detail/'+${s.articleId}" th:text="${s.title}"></a>
+                           	</li>
+                        </ul>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">随便看看</div>
+                        <ul class="blog-module-ul">
+                            <li th:each="r,iterStat : ${session.RandomArticleList}">
+                            	<span th:switch="${iterStat.count}">
+                            	<i th:case="'1'" class="layui-badge-rim layui-bg-red" th:text="${iterStat.count}"></i>
+                            	<i th:case="'2'" class="layui-badge-rim layui-bg-orange" th:text="${iterStat.count}"></i>
+                            	<i th:case="'3'" class="layui-badge-rim layui-bg-green" th:text="${iterStat.count}"></i>
+                            	<i th:case="*" class="layui-badge-rim" th:text="${iterStat.count}"></i>
+								</span>
+                            	&nbsp;&nbsp;<a th:href="'/foreground/detail/'+${r.articleId}" th:text="${r.title}"></a>
+                           	</li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    </div>
+    <!-- 底部 -->
+    <div th:replace="common/foot::#f"></div>
+    <!--侧边导航-->
+    <ul class="layui-nav layui-nav-tree layui-nav-side blog-nav-left layui-hide" lay-filter="nav">
+        <li class="layui-nav-item">
+            <a href="/"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/article"><i class="fa fa-file-text fa-fw"></i>&nbsp;笔记专栏</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/mixed_pic"><i class="fa fa-paper-plane-o fa-fw"></i>&nbsp;杂七杂八</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/timeline"><i class="fa fa-road fa-fw"></i>&nbsp;点点滴滴</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="/foreground/about"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+        </li>
+    </ul>
+    <!--分享窗体-->
+    <div class="blog-share layui-hide">
+        <div class="blog-share-body">
+            <div style="width: 200px;height:100%;">
+                <div class="bdsharebuttonbox">
+                    <a class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                    <a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                    <a class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                    <a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--遮罩-->
+    <div class="blog-mask animated layui-hide"></div>
+  
+
+    <!-- layui.js -->
+    <script src="/static/foreground/layui/layui.js"></script>
+    <!-- 全局脚本 -->
+    <script src="/static/foreground/js/global.js"></script>
+    <script src="/static/foreground/js/canvas-particle.js"></script>
+    <!-- 评论留言 -->
+    <script src="/static/foreground/js/about.js"></script>
+    <script src="/static/js/blog.js"></script>
+    
+    
+	<!-- APlayer音乐播放器 -->
+	<script src="/static/APlayer/APlayer.min.js"></script>
+		<!-- 天气预报 -->
+	<script>(function(T,h,i,n,k,P,a,g,e){g=function(){P=h.createElement(i);a=h.getElementsByTagName(i)[0];P.src=k;P.charset="utf-8";P.async=1;a.parentNode.insertBefore(P,a)};T["ThinkPageWeatherWidgetObject"]=n;T[n]||(T[n]=function(){(T[n].q=T[n].q||[]).push(arguments)});T[n].l=+new Date();if(T.attachEvent){T.attachEvent("onload",g)}else{T.addEventListener("load",g,false)}}(window,document,"script","tpwidget","//widget.seniverse.com/widget/chameleon.js"))</script>
+	<script>tpwidget("init", {
+	    "flavor": "bubble",
+	    "location": "WSBQ3F31E8P0",
+	    "geolocation": "enabled",
+	    "position": "top-right",
+	    "margin": "68px 30px",
+	    "language": "zh-chs",
+	    "unit": "c",
+	    "theme": "chameleon",
+	    "uid": "U1B01FCCC9",
+	    "hash": "42ba05e92ec7ec1a1fe68b1e93b32f89"
+	});
+	tpwidget("show");</script>
+	
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+			$(function(){
+				$.ajax({
+					url:"/foreground/musicList",
+					dataType:"json",
+					type:"post",
+					success:function(data){
+						if(data.success == 1){
+							//初始化播放器
+							const ap = new APlayer({
+							    container: document.getElementById('aplayer'),
+							    fixed: true,
+							    autoplay: true,
+							    audio: data.data
+							});
+						}else{
+							layer.msg("音乐加载失败！");
+						}
+					}
+				})
+		    }) ;
+		
+		/*]]>*/ 
+	</script>
+	
+	<script type="text/javascript"> 
+	    $(document).ready(function() {
+	    	var imglist=$("#articleContent img");
+	    	for(var i=0;i<imglist.length;i++){ //循环为每个img设置
+	    		$(imglist[i]).wrap("<a data-magnify='gallery' href='"+imglist[i].src+"'></a>");
+	    	}
+	    });
+	    
+	</script>
+	
+	
+    
+    <script th:inline="javascript">
+	/*<![CDATA[*/ 
+		
+		layui.use('flow', function(){
+			  var flow = layui.flow;
+			  
+			  //评论显示
+			  flow.load({
+				    elem: '#commentList' //流加载容器
+				    ,done: function(page, next){ //执行下一页的回调
+				    	setTimeout(function(){
+				    	$.post("/comment/list",{page:page,pageSize:5,article:$('#article').val()}, function(data) {
+				    		var lis = [];
+					        for(var i = 0; i < data.data.length; i++){
+				    			var str="";
+					        	 var datas = {
+					                    comment:data.data[i].commentId
+					                };
+					        	$.ajax({  
+					                type : "post",  
+					                 url : "/reply/list",  
+					                 data : datas,
+					                 async : false,  
+					                 success : function(data2){ 
+					                	 for(var r = 0; r < data2.data.length; r++){
+						                	 str+="<div class=\"comment-child\">\n" + 
+						                		"     <a href=\"/foreground/otherPerson/"+data2.data[r].user.userId+"\" target=\"_blank\">"+
+							     				"      <img src=\""+data2.data[r].user.headPortrait+"\" alt=\""+data2.data[r].user.nickname+"\" />\n" + 
+							     				"</a> "+
+							    				"      <div class=\"info\">\n" + 
+							    				"          <span class=\"username\">	"+data2.data[r].user.nickname+" : </span>";
+							    				if(data2.data[r].user.userId=='1'){
+							    					str+="<span class=\"is_bloger\">博主</span>&nbsp;";
+										          }
+							    		   str+="回复 <span class=\"username\">@"+data.data[i].user.nickname+" </span>";
+							    		   if(data.data[i].user.userId=='1'){
+						    					str+="<span class=\"is_bloger\">博主</span>&nbsp;";
+									          }
+							    		   str+= "：<span>"+data2.data[r].content+"</span>\n" + 
+							    				"      </div>\n" + 
+							    				"      <p class=\"info\"><span class=\"time\">"+data2.data[r].replyDate+"</span></p>\n" + 
+							    				"  </div>\n";
+					                	 }
+					                 }  
+					            }); 
+					        	lis.push( "<li>\n" + 
+										"               <div class=\"comment-parent\">\n" + 
+										"     <a href=\"/foreground/otherPerson/"+data.data[i].user.userId+"\" target=\"_blank\">\n"+
+										"                   <img src=\""+data.data[i].user.headPortrait+"\" alt=\""+data.data[i].user.nickname+"\" />\n" + 
+										"</a>\n"+
+										"                   <div class=\"info\">\n" + 
+										"                       <span class=\"username\">"+data.data[i].user.nickname+"</span>\n"); 
+						        	if(data.data[i].user.userId=='1'){
+						        		lis.push("<span class=\"is_bloger\">博主</span>&nbsp;");
+							          }
+							   lis.push("                   </div>\n" + 
+										"                   <div class=\"content\">\n" + 
+										"                       "+data.data[i].content+"\n" + 
+										"                   </div>\n" + 
+										"                   <p class=\"info info-footer\"><span class=\"time\">"+data.data[i].commentDate+"</span>&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"btn-reply\" style=\"color: #009688;font-size:14px;\" href=\"javascript:;\" onclick=\"btnReplyClick(this)\">回复</a></p>\n" + 
+										"               </div>\n" + 
+										"               <hr />\n" + str +
+										"               <!-- 回复表单默认隐藏 -->\n" + 
+										"               <div class=\"replycontainer layui-hide\">\n" + 
+										"                   <form class=\"layui-form\" action=\"/reply/list/\">\n" + 
+										"                   <input type=\"hidden\" id=\"comment\" name=\"comment\" value=\""+data.data[i].commentId+"\" />\n" +
+										"                   <input type=\"hidden\" id=\"user\" lay-verify=\"userId\" name=\"user\" value=\""+$('#user').val()+"\" />\n" +
+										"                       <div class=\"layui-form-item\">\n" + 
+										"                           <textarea name=\"content\" lay-verify=\"replyContent\" placeholder=\"回复  @"+data.data[i].user.nickname+":\" class=\"layui-textarea\" style=\"min-height:80px;\"></textarea>\n" + 
+										"                       </div>\n" + 
+										"                       <div class=\"layui-form-item\">\n" + 
+										"                           <button class=\"layui-btn layui-btn-mini\" lay-submit=\"formReply\" lay-filter=\"formReply\">提交</button>\n" + 
+										"                       </div>\n" + 
+										"                   </form>\n" + 
+										"               </div>\n" + 
+										"           </li>");
+					        }
+			    		
+			        //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+			        //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+			        next(lis.join(''), page < data.totalPage);
+			    	});
+			    	}, 500);
+			    }
+			  });
+			  
+			});
+	/*]]>*/ 
+</script>
+    
+</body>
+</html>

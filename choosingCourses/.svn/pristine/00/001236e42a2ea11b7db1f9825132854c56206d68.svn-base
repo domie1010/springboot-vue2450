@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta content="text/html;charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+	<meta http-equiv ="Pragma" content = "no-cache"/>
+	<meta http-equiv="Cache-Control" content="no cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+	<link href="https://cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/static/fsLayui-1.8.2/plugins/layui/css/layui.css" media="all"/>
+	<link rel="stylesheet" type="text/css" href="/static/fsLayui-1.8.2/css/fs.css" media="all"/>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/layui/layui.js"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/fsDict.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/fs.js?v=1.5.0"></script>
+	<script type="text/javascript" src="/static/fsLayui-1.8.2/plugins/frame/js/frame.js?v=1.5.0"></script>
+</head>
+<body>
+   <div class="layui-fluid">
+  <div class="layui-row layui-col-space1">
+  	  	 <div class="layui-col-md12">
+<div class="layui-form-query">
+<form class="layui-form" id="query_form">
+	<div class="layui-form-item">
+		<div class="layui-inline">
+			<label class="layui-form-mid">文章标题：</label>
+			<div class="layui-input-inline" style="width: 250px;">
+				<input type="tel" name="title" autocomplete="off" class="layui-input"/>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-mid">文章类别：</label>
+			<div class="layui-input-inline" style="width: 250px;">
+				<select name="classify" lay-verify="required" lay-verType="tips" class="fsSelect" addNull="1"  dict="classify"></select>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<label class="layui-form-mid">发布时间：</label>
+			<div class="layui-input-inline" style="">
+				<input type="text" name="publishDates" autocomplete="off" class="layui-input fsDate" dateRange="1" placeholder=" - "/>
+			</div>
+		</div>
+		<div class="layui-inline">
+			<div class="layui-input-inline">
+				<button class="layui-btn" type="button" function="query"><i class="layui-icon">&#xe615;</i>查询</button>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+  	 </div>
+  
+  	 <div class="layui-col-md12">
+  	 	<div class="layui-row grid-demo">
+	      <div class="layui-col-md5">
+        	<button class="layui-btn" function="top" topUrl="/admin/article/one.html" topMode="add" topWidth="1300px" topHeight="850px" topTitle="新增文章">
+			  <i class="layui-icon">&#xe654;</i>新增
+			</button>
+			<button class="layui-btn layui-btn-danger" function="submit" url="/admin/article/delete" isMutiDml="1" isConfirm="1" confirmMsg="是否确定删除选中的数据？" inputs="articleId:">
+			  <i class="layui-icon">&#xe640;</i>批量删除
+			</button>
+			<button class="layui-btn" function="refresh">
+			  <i class="layui-icon">&#x1002;</i>刷新
+			</button>
+			  <button class="layui-btn layui-btn-warm" onclick="genAllIndex()">
+				  <i class="layui-icon">&#xe63c;</i>生成所有帖子索引
+			  </button>
+	      </div>
+	      <div class="layui-col-md12">
+	         <table id="fsDatagrid" lay-filter="fsDatagrid" class="fsDatagrid" isLoad="1" url="/admin/article/list" isPage="1" defaultForm="query_form" height="full-135"></table>
+
+	         <div class="fsDatagridCols">
+	         	<p type="numbers" title="#"/>
+				<p checkbox="true"/>
+			    <p field="articleId" align="center" title="文章ID" sort="true"/>
+			    <p field="title" align="center" title="文章标题" templet="#titleTpl"  />
+			    <p field="author" align="center" title="作者" />
+			    <p field="classify" align="center" title="文章类别" templet="#classifyTpl" />
+			    <p field="click" align="center" title="点击数" sort="true" templet="#clickTpl" />
+			    <p field="commentNum" align="center" title="评论数" sort="true" templet="#commentNumTpl" />
+			    <p field="isTop" align="center" title="置顶" sort="true" templet="#isTopTpl" />
+			    <p field="isOriginal" align="center" title="原创" sort="true" templet="#isOriginalTpl" />
+			    <p field="publishDate" title="发布时间" sort="true"/>
+			    <p fixed="right" align="center" toolbar="#barDemo" title="操作"/>
+			</div>
+			
+			<script type="text/html" id="titleTpl">
+				<a target="_blank" href="/foreground/detail/{{ d.articleId }}" >{{ d.title}}</a>
+			</script>
+			
+			<script type="text/html" id="classifyTpl">
+			<span class="layui-badge layui-bg-green" style="undefined">{{d.classify.classifyName}}</span>
+			</script>
+			
+			<script type="text/html" id="clickTpl">
+				{{d.click}}次
+			</script>
+			<script type="text/html" id="commentNumTpl">
+				{{d.commentNum}}次
+			</script>
+			
+			<script type="text/html" id="isTopTpl">
+				{{#  if(d.isTop == 0){ }}
+					<span class="layui-badge layui-bg-green" style="undefined">非置顶</span>
+				{{# } else if(d.isTop == 1){ }}
+  			    	<span class="layui-badge layui-bg-red" style="undefined">置顶</span>
+ 				{{#  } }}
+			</script>
+			
+			<script type="text/html" id="isOriginalTpl">
+				{{#  if(d.isOriginal == 0){ }}
+  			    	<span class="layui-badge layui-bg-green" style="undefined">非原创</span>
+				{{# } else if(d.isOriginal == 1){ }}
+					<span class="layui-badge layui-bg-white" style="undefined">原创</span>
+ 				{{#  } }}
+			</script>
+			
+			
+			<script type="text/html" id="barDemo">
+				<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="top" topUrl="/admin/article/one.html" topMode="readonly" topWidth="1300px" topHeight="850px" topTitle="查看文章" inputs="articleId:">查看</a>
+ 				<a class="layui-btn layui-btn-xs" lay-event="top" topUrl="/admin/article/one.html" topMode="edit" topWidth="1300px" topHeight="850px" topTitle="编辑文章" inputs="articleId:">编辑</a>
+  				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="submit" url="/admin/article/delete" isConfirm="1" confirmMsg="是否确定删除当前记录？" inputs="articleId:">删除</a>
+			</script>
+	      </div>
+	    </div>
+
+  	 </div>
+
+  </div>
+</div>
+   <script>
+
+       function genAllIndex(){
+           layer.confirm("您确定要重新生成所有帖子的索引吗？<br/>(如需生成，请先删除原来的帖子索引)", {
+               title:"系统提示"
+               ,btn: ['确定','取消'] //按钮
+           }, function(){
+               layer.closeAll('dialog');
+               layer.load(1, {
+                   shade: [0.1,'#fff'] //0.1透明度的白色背景
+               });
+               $.post("/admin/article/genAllIndex",{},function(result){
+                   if(result){
+                       layer.closeAll('loading');
+                       layer.msg("生成成功！");
+                   }else{
+                       layer.msg("生成失败，请联系管理员！");
+                   }
+               },"json");
+           }, function(){
+
+           });
+       }
+   </script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+package com.longwang.controller;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.longwang.service.NoticeService;
+import com.longwang.util.DateUtil;
+
+/**
+ * 根路径以及其他请求处理
+ * @author LongWang
+ *
+ */
+@Controller
+public class IndexController {
+	
+	
+	@Value("${imageFilePath}")
+	private String imageFilePath;  //文件路径
+	
+	@Resource
+	private NoticeService noticeService;
+	
+	@RequestMapping("/")
+	public String index(HttpSession session) {
+		
+		//查询公告
+		session.setAttribute("noticeList", noticeService.list(0, 5));
+		return "index";//跳转到index.html
+	}
+	
+	/**
+	 * 登录页面
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
+	/**
+	 * 后台默认首页
+	 * @return
+	 */
+	@RequestMapping("/index")
+	public String root() {
+		return "/common/index";
+	}
+	
+	/**
+	 * 博主信息页面
+	 * @return
+	 */
+	@RequestMapping("/blogger")
+	public String blogger() {
+		return "/blogger/index";
+	}
+	
+	/**
+	 * 图片上传处理
+	* @Title: ckeditorUpload  
+	* @param file  图片文件
+	* @return  参数说明 
+	* @return Map<String,Object>    返回类型 
+	* @throws
+	 */
+	@ResponseBody
+	@RequestMapping("/upload")
+	public Map<String, Object> ckeditorUpload(@RequestParam("file")MultipartFile file){
+		Map<String, Object> resultMap=new HashMap<String, Object>();
+		Map<String, Object> resultMap1=new HashMap<String, Object>();
+		String fileName=file.getOriginalFilename(); // 获取文件名
+		String suffixName=fileName.substring(fileName.lastIndexOf(".")); // 获取文件的后缀
+		String newFileName="";
+		try {
+			newFileName = DateUtil.getCurrentDateStr()+suffixName;  // 新文件名
+			FileUtils.copyInputStreamToFile(file.getInputStream(), new File(imageFilePath+newFileName));  // 上传
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resultMap.put("code", 0);
+		resultMap1.put("filePath", newFileName);
+		resultMap.put("data", resultMap1);
+		return resultMap;
+	}
+	
+}

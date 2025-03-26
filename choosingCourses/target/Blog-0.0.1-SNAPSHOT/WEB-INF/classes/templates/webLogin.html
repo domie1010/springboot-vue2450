@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Insert title here</title>
+<link rel="stylesheet" href="/static/foreground/layui/css/layui.css"/>
+<link rel="stylesheet" href="/static/login/css/login.css" media="all" />
+<script type="text/javascript" src="/static/foreground/layui/layui.js"></script>
+<script type="text/javascript">
+/*<![CDATA[*/  
+layui.use('form', function(){
+	  var form = layui.form;
+	  
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+		  
+	  });
+	});
+/*]]>*/ 
+</script>
+</head>
+<body>
+
+<div class="video_mask"></div>
+<div class="login">
+    <h1>欢迎登录美食菜谱分享平台</h1>
+    <form id="fm" method="post" action="/checkLogin" class="layui-form" >
+        <div class="layui-form-item">
+            <input class="layui-input" id="userName" name="username"  placeholder="用户名"  lay-verify="required" type="text" autocomplete="off"/>
+        </div>
+        <div class="layui-form-item">
+            <input class="layui-input" id="password" name="password"  placeholder="密码"   lay-verify="required" type="password" autocomplete="off"/>
+        </div>
+        <button class="layui-btn login_btn" lay-submit="" lay-filter="formDemo" >登录</button>
+        <div th:if="${errorInfo}" style="text-align: center;">
+			<font color="red" th:text="${errorInfo}"></font>
+		</div>
+    </form>
+</div>
+
+</body>
+</html>

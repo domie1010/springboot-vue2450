@@ -1,0 +1,50 @@
+package com.longwang.shiro.exception;
+
+import org.apache.shiro.authz.UnauthenticatedException;  
+import org.apache.shiro.authz.UnauthorizedException;  
+import org.springframework.web.servlet.HandlerExceptionResolver;  
+import org.springframework.web.servlet.ModelAndView;
+
+import com.longwang.util.ResponseUtil;
+
+import net.sf.json.JSONObject;
+
+import javax.servlet.http.HttpServletRequest;  
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+  
+/**
+ * 全局异常处理 
+* @ClassName: MyExceptionHandler 
+* @author Mr.Long
+* @date 2018年3月25日 下午3:31:38 
+*
+ */
+public class MyExceptionHandler implements HandlerExceptionResolver {  
+  
+    public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception ex) {  
+        ModelAndView mv = new ModelAndView();  
+        if (ex instanceof UnauthenticatedException) {  
+            System.out.println("token错误");
+            JSONObject resultJSON=new JSONObject();
+            resultJSON.put("errorInfo", "token错误");
+            mv.setViewName("403");
+            return mv;
+        } else if (ex instanceof UnauthorizedException) {  
+            System.out.println("用户无权限");
+            JSONObject resultJSON=new JSONObject();
+            resultJSON.put("errorInfo", "该用户无权限!");
+            try {
+				ResponseUtil.write(resultJSON, httpServletResponse);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            return null;
+        }else{
+        	ex.printStackTrace();
+        	return mv;
+        }
+    }  
+}
